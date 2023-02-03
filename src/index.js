@@ -76,6 +76,7 @@ async function supportFetch(pathname) {
   html = html.replace(/<!-- Google Tag Manager -->[\s\S]*?<!-- End Google Tag Manager -->/g, '');
   html = html.replace(/<!-- Google Tag Manager \(noscript\) -->[\s\S]*?<!-- End Google Tag Manager \(noscript\) -->/g, '');
   html = html.replace(/<!-- Adobe analytics Tag -->[\s\S]*?<!-- END Adobe analytics Tag -->/g, '');
+  html = html.replace(/<script src="\/\/assets\.adobedtm\.com\/.*?<\/script>/g, '');
 
   return Response_.html(html);
 }
@@ -87,10 +88,10 @@ async function handleRequest(request) {
     return Response_.forbidden('Access Denied');
   }
 
-  const { protocol, hostname, pathname } = new URL(request.url);
+  const { protocol, hostname, pathname, href } = new URL(request.url);
 
-  if (['support.casio.com.caduo.ml', 'support.casio.caduo.ml'].indexOf(hostname) !== -1 || protocol !== 'https:') {
-    return Response_.redirectForever(`https://support.caduo.ml${pathname}`);
+  if (['support.casio.com.caduo.ml', 'support.casio.caduo.ml'].indexOf(hostname) !== -1 || (protocol !== 'https:' && allowedIP.indexOf(ip) === -1)) {
+    return Response_.redirect(href.replace(protocol, 'https:').replace(hostname, 'support.caduo.ml'));
   }
 
   if (pathname === '/') {
