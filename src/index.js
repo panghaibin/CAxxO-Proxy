@@ -73,6 +73,8 @@ async function supportFetch(pathname) {
 
   let html = await res.text();
   html = html.replace(/https:\/\/support\.casio\.com/g, '');
+
+  /* remove rubbish */
   html = html.replace(/<!-- Google Tag Manager -->[\s\S]*?<!-- End Google Tag Manager -->/g, '<!-- -->');
   html = html.replace(/<!-- Google Tag Manager \(noscript\) -->[\s\S]*?<!-- End Google Tag Manager \(noscript\) -->/g, '<!-- -->');
   html = html.replace(/<!-- Adobe analytics Tag -->[\s\S]*?<!-- END Adobe analytics Tag -->/g, '<!-- -->');
