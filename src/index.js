@@ -61,10 +61,23 @@ class Response_ {
 async function supportFetch(pathname) {
   const url = `https://support.casio.com${pathname}`;
   const res = await fetch(url);
+
   if (!res.ok) {
     return Response_.notFound();
   }
-  return res;
+
+  const contentType = res.headers.get('Content-Type');
+  if (contentType.indexOf('text/html') === -1) {
+    return res;
+  }
+
+  let html = await res.text();
+  html = html.replace(/https:\/\/support\.casio\.com/g, '');
+  html = html.replace(/<!-- Google Tag Manager -->[\s\S]*?<!-- End Google Tag Manager -->/g, '');
+  html = html.replace(/<!-- Google Tag Manager \(noscript\) -->[\s\S]*?<!-- End Google Tag Manager \(noscript\) -->/g, '');
+  html = html.replace(/<!-- Adobe analytics Tag -->[\s\S]*?<!-- END Adobe analytics Tag -->/g, '');
+
+  return Response_.html(html);
 }
 
 async function handleRequest(request) {
@@ -76,13 +89,13 @@ async function handleRequest(request) {
 
   const { hostname, pathname } = new URL(request.url);
 
-	if (['support.casio.com.caduo.ml', 'support.casio.caduo.ml'].indexOf(hostname) !== -1) {
-		return Response_.redirectForever('https://support.caduo.ml' + pathname);
-	}
+  if (['support.casio.com.caduo.ml', 'support.casio.caduo.ml'].indexOf(hostname) !== -1) {
+    return Response_.redirectForever('https://support.caduo.ml' + pathname);
+  }
 
-	if (pathname === '/') {
-		return Response_.html('Hello World');
-	}
+  if (pathname === '/') {
+    return Response_.html('Hello World');
+  }
 
   return supportFetch(pathname);
 }
