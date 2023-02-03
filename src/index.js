@@ -87,9 +87,9 @@ async function handleRequest(request) {
     return Response_.forbidden('Access Denied');
   }
 
-  const { hostname, pathname } = new URL(request.url);
+  const { protocol, hostname, pathname } = new URL(request.url);
 
-  if (['support.casio.com.caduo.ml', 'support.casio.caduo.ml'].indexOf(hostname) !== -1) {
+  if (['support.casio.com.caduo.ml', 'support.casio.caduo.ml'].indexOf(hostname) !== -1 || protocol !== 'https:') {
     return Response_.redirectForever(`https://support.caduo.ml${pathname}`);
   }
 
