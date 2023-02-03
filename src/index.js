@@ -88,7 +88,7 @@ async function handleRequest(request) {
     return Response_.forbidden('Access Denied');
   }
 
-  const { protocol, hostname, pathname, href } = new URL(request.url);
+  const { protocol, hostname, pathname, href, origin } = new URL(request.url);
 
   if (['support.casio.com.caduo.ml', 'support.casio.caduo.ml'].indexOf(hostname) !== -1 || (protocol !== 'https:' && allowedIP.indexOf(ip) === -1)) {
     return Response_.redirect(href.replace(protocol, 'https:').replace(hostname, 'support.caduo.ml'));
@@ -98,7 +98,7 @@ async function handleRequest(request) {
     return Response_.html('Hello World');
   }
 
-  return supportFetch(pathname);
+  return supportFetch(href.replace(origin, ''));
 }
 
 addEventListener('fetch', function (event) {
