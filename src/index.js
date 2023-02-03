@@ -90,7 +90,7 @@ async function handleRequest(request) {
   const { hostname, pathname } = new URL(request.url);
 
   if (['support.casio.com.caduo.ml', 'support.casio.caduo.ml'].indexOf(hostname) !== -1) {
-    return Response_.redirectForever('https://support.caduo.ml' + pathname);
+    return Response_.redirectForever(`https://support.caduo.ml${pathname}`);
   }
 
   if (pathname === '/') {
