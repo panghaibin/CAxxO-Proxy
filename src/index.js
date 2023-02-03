@@ -58,12 +58,17 @@ class Response_ {
   }
 }
 
-async function supportFetch(pathname) {
-  const url = `https://support.casio.com${pathname}`;
+async function supportFetch(request) {
+  const { href, origin } = new URL(request.url);
+  const url = href.replace(origin, 'https://support.casio.com');
   const res = await fetch(url);
 
   if (!res.ok) {
     return Response_.notFound();
+  }
+
+  if (res.url !== url) {
+    return Response_.redirect(res.url.replace('https://support.casio.com', origin));
   }
 
   const contentType = res.headers.get('Content-Type');
@@ -95,14 +100,14 @@ async function handleRequest(request) {
   const { protocol, hostname, pathname, href, origin } = new URL(request.url);
 
   if (['support.casio.com.caduo.ml', 'support.casio.caduo.ml'].indexOf(hostname) !== -1 || (protocol !== 'https:' && allowedIP.indexOf(ip) === -1)) {
-    return Response_.redirect(href.replace(protocol, 'https:').replace(hostname, 'support.caduo.ml'));
+    return Response_.redirect(href.replace(origin, 'https://support.caduo.ml'));
   }
 
   if (pathname === '/') {
     return Response_.html('Hello World');
   }
 
-  return supportFetch(href.replace(origin, ''));
+  return supportFetch(request);
 }
 
 addEventListener('fetch', function (event) {
