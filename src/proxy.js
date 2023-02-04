@@ -23,7 +23,7 @@ export class CasioProxy {
     return html;
   }
 
-  static URLRewrite(res) {
+  static URLReplace(res) {
     res = res.replace(/https?:\/\/support\.casio\.com/g, 'https://support.caduo.ml');
     res = res.replace(/https?:\/\/world\.casio\.com/g, 'https://world.caduo.ml');
     return res;
@@ -40,7 +40,7 @@ export class CasioProxy {
     }
 
     if (res.url !== url) {
-      return Response_.redirect(this.URLRewrite(res.url));
+      return Response_.redirect(this.URLReplace(res.url));
     }
 
     const contentType = res.headers.get('Content-Type');
@@ -49,7 +49,7 @@ export class CasioProxy {
     }
 
     let html = await res.text();
-    html = this.URLRewrite(html);
+    html = this.URLReplace(html);
     html = this.removeRubbish(html);
     return Response_.html(html);
   }
