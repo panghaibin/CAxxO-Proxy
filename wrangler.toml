@@ -1,3 +1,11 @@
 name = "support-proxy"
 main = "src/index.js"
 compatibility_date = "2023-02-03"
+routes = [
+    { pattern = "support.caduo.ml", custom_domain = true },
+    { pattern = "support.casio.caduo.ml", custom_domain = true },
+    { pattern = "support.casio.com.caduo.ml", custom_domain = true },
+    { pattern = "world.caduo.ml", custom_domain = true },
+    { pattern = "world.casio.caduo.ml", custom_domain = true },
+    { pattern = "world.casio.com.caduo.ml", custom_domain = true },
+]
