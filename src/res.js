@@ -17,8 +17,8 @@ export class Response_ {
     });
   }
 
-  static notFound() {
-    return new Response('Not Found', {
+  static notFound(msg = 'Not Found') {
+    return new Response(msg, {
       status: 404,
     });
   }
