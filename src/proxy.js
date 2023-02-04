@@ -17,7 +17,7 @@ export class CasioProxy {
     html = html.replace(/<!-- Google Tag Manager \(noscript\) -->[\s\S]*?<!-- End Google Tag Manager \(noscript\) -->/g, '<!-- 02 -->');
     html = html.replace(/<!-- Adobe analytics Tag -->[\s\S]*?<!-- END Adobe analytics Tag -->/g, '<!-- 03 -->');
     html = html.replace(/<script .*?assets\.adobedtm\.com\/[\s\S]*?<\/script>/g, '<!-- 04 -->');
-    html = html.replace(/\(function[\s\S]*?gtm\.js[\s\S]*?<\/script>/g, '/* 05 */</script>');
+    html = html.replace(/\(function\(w[\s\S]*?gtm\.js[\s\S]*?<\/script>/g, '/* 05 */</script>');
     html = html.replace(/window.adobeDataLayer[\s\S]*?<\/script>/g, '/* 06 */</script>');
     html = html.replace(/<noscript>[\s\S]*?<iframe[\s\S]*?googletagmanager[\s\S]*?<\/noscript>/g, '<!-- 07 -->');
     return html;
