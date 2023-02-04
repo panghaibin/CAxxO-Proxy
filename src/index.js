@@ -80,12 +80,12 @@ async function supportFetch(request) {
   html = html.replace(/https:\/\/support\.casio\.com/g, '');
 
   /* remove rubbish */
-  html = html.replace(/<!-- Google Tag Manager -->[\s\S]*?<!-- End Google Tag Manager -->/g, '<!-- -->');
-  html = html.replace(/<!-- Google Tag Manager \(noscript\) -->[\s\S]*?<!-- End Google Tag Manager \(noscript\) -->/g, '<!-- -->');
-  html = html.replace(/<!-- Adobe analytics Tag -->[\s\S]*?<!-- END Adobe analytics Tag -->/g, '<!-- -->');
-  html = html.replace(/<script src="\/\/assets\.adobedtm\.com\/[\s\S]*?<\/script>/g, '<!-- -->');
+  html = html.replace(/<!-- Google Tag Manager -->[\s\S]*?<!-- End Google Tag Manager -->/g, '<!-- 01 -->');
+  html = html.replace(/<!-- Google Tag Manager \(noscript\) -->[\s\S]*?<!-- End Google Tag Manager \(noscript\) -->/g, '<!-- 02 -->');
+  html = html.replace(/<!-- Adobe analytics Tag -->[\s\S]*?<!-- END Adobe analytics Tag -->/g, '<!-- 03 -->');
+  html = html.replace(/<script src="\/\/assets\.adobedtm\.com\/[\s\S]*?<\/script>/g, '<!-- 04 -->');
   html = html.replace(/\(function[\s\S]*?gtm\.js[\s\S]*?<\/script>/g, '</script>');
-  html = html.replace(/<noscript>[\s\S]*?<iframe[\s\S]*?googletagmanager[\s\S]*?<\/noscript>/g, '<!-- -->');
+  html = html.replace(/<noscript>[\s\S]*?<iframe[\s\S]*?googletagmanager[\s\S]*?<\/noscript>/g, '<!-- 05 -->');
 
   return Response_.html(html);
 }
